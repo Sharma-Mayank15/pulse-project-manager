@@ -1,0 +1,431 @@
+openapi: 3.0.3
+info:
+  title: Pulse Tasks
+  description: |-
+    Online, Collaborative Project Management Tool.
+
+  contact:
+    email: mayankaryan309@gmail.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.11
+
+paths:
+  /users:
+    post:
+      tags:
+        - User
+      summary: Create user
+      requestBody:
+        description: Created user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/User"
+      responses:
+        default:
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+            application/xml:
+              schema:
+                $ref: "#/components/schemas/User"
+  /login:
+    post:
+      tags:
+        - User
+      summary: Logs user into the system
+      description: ""
+      operationId: loginUser
+      parameters:
+        - name: email
+          in: query
+          description: The email for login
+          required: true
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                type: string
+        "400":
+          description: Invalid username/password supplied
+  /logout:
+    post:
+      tags:
+        - User
+      summary: Logs out current logged in user session
+      description: ""
+      operationId: logoutUser
+      requestBody:
+        content:
+          application/json:
+              schema:
+                type: object
+                properties:
+                  refresh_token: 
+                    type: string
+      responses:
+        default:
+          description: successful operation
+  /users/{id}:
+    get:
+      tags:
+        - User
+      summary: Get user details
+      description: This can only be done by the logged in user.
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: number
+      responses:
+        "200":
+          description: successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    put:
+      tags:
+        - User
+      summary: Update user
+      description: This can only be done by the logged in user.
+      operationId: updateUser
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: number
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UpdateUser"
+      responses:
+        "200":
+          description: successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+    delete:
+      tags:
+        - User
+      summary: Delete user
+      description: This can only be done by the logged in user.
+      operationId: deleteUser
+      parameters:
+        - name: id
+          in: path
+          description: The user id that needs to be deleted
+          required: true
+          schema:
+            type: string
+      responses:
+        "201":
+          description: deleted
+        "400":
+          description: Invalid user id supplied
+        "404":
+          description: User not found
+
+  /projects:
+    post:
+      tags:
+        - Project
+      summary: Create task in project
+      requestBody:
+        description: Created user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateProject"
+      responses:
+        "200":
+          description: successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+
+    get:
+      tags:
+        - Project
+      summary: Get project list
+      responses:
+        "200":
+          description: successfull operation
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+  /projects/{id}:
+    get:
+      tags:
+        - Project
+      summary: Get project details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectWithTasks"
+    put:
+      tags:
+        - Project
+      summary: Edit project details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Project"
+      responses:
+        "200":
+          description: successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ProjectWithTasks"
+    delete:
+      tags:
+        - Project
+      summary: Delete project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "201":
+          description: successfull operation
+  /projects/{id}/tasks/:
+    post:
+      tags:
+        - Task
+      summary: Create task in project
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        description: Created user
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/CreateTask"
+      responses:
+        "200":
+          description: successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+  
+  /tasks/{id}:
+    get:
+      tags:
+        - Task
+      summary: Get task details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "200":
+          description: successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+    put:
+      tags:
+        - Task
+      summary: Edit task details
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/Task"
+      responses:
+        "200":
+          description: successfull operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Task"
+    delete:
+      tags:
+        - Task
+      summary: Delete task
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        "201":
+          description: successfull operation
+
+components:
+  schemas:
+    User:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        username:
+          type: string
+          example: theUser
+        email:
+          type: string
+          example: john@email.com
+    UpdateUser:
+      type: object
+      properties:
+        username:
+          type: string
+          example: theUser
+        email:
+          type: string
+          example: john@email.com
+        password:
+          type: string
+
+    CreateProject:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Project One
+        description:
+          type: string
+          example: Sample Project
+        start_date:
+          type: string
+          format: date
+        estimated_end_date:
+          type: string
+          format: date
+    Project:
+      type: object
+      properties:
+        id:
+          type: string
+          format: uuid
+        title:
+          type: string
+          example: Project One
+        description:
+          type: string
+          example: Sample Project
+        start_date:
+          type: string
+          format: date
+        estimated_end_date:
+          type: string
+          format: date
+        progress:
+          type: integer
+          format: percentage
+        created_by:
+          $ref: "#/components/schemas/User"
+        edited_by:
+          $ref: "#/components/schemas/User"
+    ProjectWithTasks:
+      type: object
+      allOf:
+        - $ref: "#/components/schemas/Project"
+        - type: object
+          properties:
+            users:
+              type: array
+              items:
+                $ref: "#/components/schemas/User"
+            tasks:
+              type: array
+              items:
+                $ref: "#/components/schemas/Task"
+
+    CreateTask:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Task One
+        description:
+          type: string
+          example: Sample Task
+        status:
+          type: string
+          enum: [TODO, IN_PROGRESS, REVIEW, DONE]
+        user:
+          type: string
+          format: uuid
+    Task:
+      type: object
+      properties:
+        title:
+          type: string
+          example: Task One
+        description:
+          type: string
+          example: Sample Task
+        status:
+          type: string
+          enum: [TODO, IN_PROGRESS, REVIEW, DONE]
+        created_by:
+          $ref: "#/components/schemas/User"
+        edited_by:
+          $ref: "#/components/schemas/User"

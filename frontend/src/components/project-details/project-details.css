@@ -1,0 +1,45 @@
+.projects-section {
+  padding: 1rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: var(--background-color);
+  box-shadow:
+    0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur)
+      var(--card-box-shadow-1),
+    0px var(--card-box-shadow-2-y) var(--card-box-shadow-2-blur)
+      var(--card-box-shadow-2),
+    0 0 0 1px var(--card-border-color);
+
+  border-radius: 15px;
+}
+.projects-header {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+  p {
+    z-index: 2;
+    position: relative;
+    margin: 0;
+    font-size: 14px;
+    line-height: 1.7;
+    color: var(--text-color);
+  }
+}
+
+.column {
+  margin: 0.4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  background-color: var(--background-color);
+  box-shadow:
+    0px var(--card-box-shadow-1-y) var(--card-box-shadow-1-blur)
+      var(--card-box-shadow-1),
+    0px var(--card-box-shadow-2-y) var(--card-box-shadow-2-blur)
+      var(--card-box-shadow-2),
+    0 0 0 1px var(--card-border-color);
+
+  border-radius: 15px;
+}

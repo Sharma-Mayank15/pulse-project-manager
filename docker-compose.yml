@@ -1,0 +1,43 @@
+services:
+  db:
+    image: postgres
+    volumes:
+      - ./data/db:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+
+  api:
+    build: ./backend
+    ports:
+      - '8000:8000'
+    volumes:
+      - ./backend:/backend
+    depends_on:
+      db:
+        condition: service_started
+    command:
+      [
+        './wait-for-connect.sh',
+        'db:5432',
+        '--',
+        'daphne',
+        '-b',
+        '0.0.0.0',
+        '-p',
+        '8000',
+        'api_engine.asgi:application',
+      ]
+
+  web:
+    build: ./frontend
+    ports:
+      - '3000:80'
+    volumes:
+      - ./frontend:/frontend
+
+  redis:
+    image: redis
+    ports:
+      - '6379:6379'
