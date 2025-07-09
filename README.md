@@ -43,7 +43,7 @@
 1. **Clone the Repository**:
 
 ```bash
-git clone https://github.com/SuryaNelakanti/oh-prom.git
+git clone https://github.com/Sharma-Mayank15/pulse-project-manager.git
 ```
 
 > *(Replace this link with your own GitHub repo if you've forked/renamed it to `pulse-tasks`)*
