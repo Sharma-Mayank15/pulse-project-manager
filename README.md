@@ -46,8 +46,6 @@
 git clone https://github.com/Sharma-Mayank15/pulse-project-manager.git
 ```
 
-> *(Replace this link with your own GitHub repo if you've forked/renamed it to `pulse-tasks`)*
-
 2. **Navigate to Project Folder**:
 
 ```bash
@@ -79,4 +77,4 @@ To see real-time updates in action:
 
 ## 📄 License
 
-MIT License – Use, modify, and share freely. Just don't forget to have fun 🚀
+MIT License 
